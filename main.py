@@ -110,7 +110,8 @@ def build_prompt(texte: str, style: str, slogan: str = "", couleur: str = "") ->
 async def generate_image(prompt: str, width: int, height: int) -> bytes:
     encoded = urllib.parse.quote(prompt)
     seed = random.randint(1, 99999)
-  url = f"https://image.pollinations.ai/prompt/{encoded}?width={width}&height={height}&nologo=true&seed={seed}&enhance=true&model=flux"
+    url = f"https://image.pollinations.ai/prompt/{encoded}?width={width}&height={height}&nologo=true&seed={seed}&enhance=true"
+    async with aiohttp.ClientSession() as session:
         async with session.get(url, timeout=aiohttp.ClientTimeout(total=60)) as resp:
             if resp.status == 200:
                 return await resp.read()
