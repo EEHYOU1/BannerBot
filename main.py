@@ -106,7 +106,9 @@ async def avatar(interaction: discord.Interaction, nom: str, style: str):
 
 @client.event
 async def on_ready():
-    await tree.sync()
+    guild = discord.Object(id=1402946294603055134)
+    tree.copy_global_to(guild=guild)
+    await tree.sync(guild=guild)
     print(f"Bot connecté : {client.user}")
     print("Commandes synchronisées !")
 
